@@ -9,6 +9,7 @@ class TinyChess:
         self.width = 800
         self.height = 800
         self.size = self.is_running = True
+        self.clock = None
         self.display_surface = None
         self.board_surface = None
         self.board = board.Board()
@@ -36,6 +37,7 @@ class TinyChess:
 
     def on_init(self):
         pygame.init()
+        self.clock = pygame.time.Clock()
         self.display_surface = pygame.display.set_mode(
             (self.width, self.height))
         self.board_surface = self.draw_board()
@@ -62,6 +64,7 @@ class TinyChess:
                 self.on_event(event)
             self.on_loop()
             self.on_render()
+            self.clock.tick(60)
         self.on_cleanup()
 
 

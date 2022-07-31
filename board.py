@@ -80,7 +80,23 @@ class Board:
         for r in range(RANKS):
             rank = ''
             for f in range(FILES):
-                rank += 'W' if self.squares[r][f].get_color(
-                ) == SquareColor.WHITE else 'B'
+                square = self.squares[r][f]
+                piece = square.get_piece()
+                if piece != Pieces.EMPTY:
+                    if piece == Pieces.KING:
+                        rank += 'K'
+                    elif piece == Pieces.KNIGHT:
+                        rank += 'N'
+                    elif piece == Pieces.BISHOP:
+                        rank += 'B'
+                    elif piece == Pieces.QUEEN:
+                        rank += 'Q'
+                    elif piece == Pieces.ROOK:
+                        rank += 'R'
+                    elif piece == Pieces.PAWN:
+                        rank += 'P'
+                else:
+                    rank += 'W' if self.squares[r][f].get_color(
+                        ) == SquareColor.WHITE else 'B'
                 rank += ' '
             print(rank)

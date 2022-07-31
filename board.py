@@ -8,6 +8,11 @@ class SquareColor(Enum):
     BLACK = 1
 
 
+class PieceColor(Enum):
+    LIGHT = 0
+    DARK = 1
+
+
 class Pieces(Enum):
     PAWN = 0
     KNIGHT = 1
@@ -18,10 +23,21 @@ class Pieces(Enum):
     EMPTY = 6
 
 
-class Board:
+class Piece:
+    def __init__(self, kind, color=None):
+        self.__kind = kind
+        self.__color = color
 
+    def get_color(self):
+        return self.__color
+
+    def get_kind(self):
+        return self.__kind
+
+
+class Board:
     class Square:
-        def __init__(self, color, piece=Pieces.EMPTY):
+        def __init__(self, color, piece=Piece(kind=Pieces.EMPTY)):
             self.__color = color
             self.__piece = piece
 
@@ -49,11 +65,17 @@ class Board:
                        Pieces.QUEEN, Pieces.KING, Pieces.BISHOP,
                        Pieces.KNIGHT, Pieces.ROOK]
         for f, piece in enumerate(piece_order):
-            self.squares[black_back_rank][f].set_piece(piece)
-            self.squares[white_back_rank][f].set_piece(piece)
+            self.squares[black_back_rank][f] \
+                .set_piece(Piece(kind=piece,
+                                 color=PieceColor.DARK))
+            self.squares[white_back_rank][f].set_piece(Piece(piece,
+                                                             PieceColor.LIGHT))
         for f in range(FILES):
-            self.squares[white_second_rank][f].set_piece(Pieces.PAWN)
-            self.squares[black_second_rank][f].set_piece(Pieces.PAWN)
+            self.squares[white_second_rank][f] \
+                .set_piece(Piece(Pieces.PAWN,
+                                 PieceColor.LIGHT))
+            self.squares[black_second_rank][f] \
+                .set_piece(Piece(Pieces.PAWN, PieceColor.DARK))
 
     def init_square_colors(self):
         for rank in range(RANKS):

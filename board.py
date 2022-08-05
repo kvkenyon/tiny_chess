@@ -58,6 +58,7 @@ class Board:
     def __init__(self):
         self.squares = [[None] * RANKS for f in range(FILES)]
         self.chess_pieces = sprites.ChessPieces()
+        self.sprite_group = pygame.sprite.Group()
         self.__init_square_colors()
         self.__init_place_pieces()
 
@@ -126,17 +127,19 @@ class Board:
                 pygame.draw.rect(board_surface, color, square_coordinates)
                 piece = square.get_piece()
                 if piece.get_kind() == Pieces.KING:
-                    light_king, dark_king = self.chess_pieces.get_kings(.3)
-                    height, width = light_king.get_height(), \
-                        light_king.get_width()
+                    white_king, black_king = self.chess_pieces.get_kings(.3)
+                    height, width = white_king.get_height(), \
+                        black_king.get_width()
                     offset_y = (SQUARE_SIZE - height) // 2
                     offset_x = (SQUARE_SIZE - width) // 2
                     if piece.get_color() == PieceColor.LIGHT:
-                        board_surface.blit(light_king, (square_x + offset_x,
-                                                        square_y + offset_y))
+                        white_king.rect.x = square_x + offset_x
+                        white_king.rect.y = square_y + offset_y
+                        self.sprite_group.add(white_king)
                     else:
-                        board_surface.blit(dark_king, (square_x + offset_x,
-                                                       square_y + offset_y))
+                        black_king.rect.x = square_x + offset_x
+                        black_king.rect.y = square_y + offset_y
+                        self.sprite_group.add(black_king)
                 elif piece.get_kind() == Pieces.PAWN:
                     white_pawn, black_pawn = self.chess_pieces.get_pawns(.3)
                     height, width = white_pawn.get_height(), \
@@ -144,11 +147,13 @@ class Board:
                     offset_y = (SQUARE_SIZE - height) // 2
                     offset_x = (SQUARE_SIZE - width) // 2
                     if piece.get_color() == PieceColor.LIGHT:
-                        board_surface.blit(white_pawn, (square_x + offset_x,
-                                                        square_y + offset_y))
+                        white_pawn.rect.x = square_x + offset_x
+                        white_pawn.rect.y = square_y + offset_y
+                        self.sprite_group.add(white_pawn)
                     else:
-                        board_surface.blit(black_pawn, (square_x + offset_x,
-                                                        square_y + offset_y))
+                        black_pawn.rect.x = square_x + offset_x
+                        black_pawn.rect.y = square_y + offset_y
+                        self.sprite_group.add(black_pawn)
                 elif piece.get_kind() == Pieces.QUEEN:
                     white_queen, black_queen = \
                         self.chess_pieces.get_queens(.3)
@@ -156,13 +161,14 @@ class Board:
                         white_queen.get_width()
                     offset_y = (SQUARE_SIZE - height) // 2
                     offset_x = (SQUARE_SIZE - width) // 2
-
                     if piece.get_color() == PieceColor.LIGHT:
-                        board_surface.blit(white_queen, (square_x + offset_x,
-                                                         square_y + offset_y))
+                        white_queen.rect.x = square_x + offset_x
+                        white_queen.rect.y = square_y + offset_y
+                        self.sprite_group.add(white_queen)
                     else:
-                        board_surface.blit(black_queen, (square_x + offset_x,
-                                                         square_y + offset_y))
+                        black_queen.rect.x = square_x + offset_x
+                        black_queen.rect.y = square_y + offset_y
+                        self.sprite_group.add(black_queen)
                 elif piece.get_kind() == Pieces.ROOK:
                     white_rook, black_rook = \
                         self.chess_pieces.get_rooks(.3)
@@ -171,11 +177,13 @@ class Board:
                     offset_y = (SQUARE_SIZE - height) // 2
                     offset_x = (SQUARE_SIZE - width) // 2
                     if piece.get_color() == PieceColor.LIGHT:
-                        board_surface.blit(white_rook, (square_x + offset_x,
-                                                        square_y + offset_y))
+                        white_rook.rect.x = square_x + offset_x
+                        white_rook.rect.y = square_y + offset_y
+                        self.sprite_group.add(white_rook)
                     else:
-                        board_surface.blit(black_rook, (square_x + offset_x,
-                                                        square_y + offset_y))
+                        black_rook.rect.x = square_x + offset_x
+                        black_rook.rect.y = square_y + offset_y
+                        self.sprite_group.add(black_rook)
                 elif piece.get_kind() == Pieces.BISHOP:
                     white_bishop, black_bishop = \
                         self.chess_pieces.get_bishops(.3)
@@ -184,11 +192,13 @@ class Board:
                     offset_y = (SQUARE_SIZE - height) // 2
                     offset_x = (SQUARE_SIZE - width) // 2
                     if piece.get_color() == PieceColor.LIGHT:
-                        board_surface.blit(white_bishop, (square_x + offset_x,
-                                                          square_y + offset_y))
+                        white_bishop.rect.x = square_x + offset_x
+                        white_bishop.rect.y = square_y + offset_y
+                        self.sprite_group.add(white_bishop)
                     else:
-                        board_surface.blit(black_bishop, (square_x + offset_x,
-                                                          square_y + offset_y))
+                        black_bishop.rect.x = square_x + offset_x
+                        black_bishop.rect.y = square_y + offset_y
+                        self.sprite_group.add(black_bishop)
                 elif piece.get_kind() == Pieces.KNIGHT:
                     white_knight, black_knight = \
                         self.chess_pieces.get_knights(.3)
@@ -197,11 +207,14 @@ class Board:
                     offset_y = (SQUARE_SIZE - height) // 2
                     offset_x = (SQUARE_SIZE - width) // 2
                     if piece.get_color() == PieceColor.LIGHT:
-                        board_surface.blit(white_knight, (square_x + offset_x,
-                                                          square_y + offset_y))
+                        white_knight.rect.x = square_x + offset_x
+                        white_knight.rect.y = square_y + offset_y
+                        self.sprite_group.add(white_knight)
                     else:
-                        board_surface.blit(black_knight, (square_x + offset_x,
-                                                          square_y + offset_y))
+                        black_knight.rect.x = square_x + offset_x
+                        black_knight.rect.y = square_y + offset_y
+                        self.sprite_group.add(black_knight)
+        self.sprite_group.draw(board_surface)
         return board_surface
 
     def print(self):
